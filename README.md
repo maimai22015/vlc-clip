@@ -32,7 +32,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p><a href="https://github.com/maimai22015/vlc-anime-v3/releases" data-type="URL" data-id="https://github.com/maimai22015/vlc-anime-v3/releases" target="_blank" rel="noreferrer noopener">https://ytpmv.info/contents/vlc-anime-v3.rar</a></p>
+<p><a href="https://github.com/maimai22015/vlc-anime-v3/releases" data-type="URL" data-id="https://github.com/maimai22015/vlc-anime-v3/releases" target="_blank" rel="noreferrer noopener">https://github.com/maimai22015/vlc-anime-v3/releases</a></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
