@@ -1,6 +1,6 @@
 #######################################################################################
-#       VLC-anime ver3.1                                                              #
-#                                                                         2021/03/10  #
+#       VLC-anime ver3.2                                                              #
+#                                                                         2021/07/31  #
 #       Written by Maimai (Twitter:@Maimai22015,@Maimai22016/YTPMV.info)              #
 #       Read https://ytpmv.info/vlc-anime-v3                                          #
 #######################################################################################
@@ -93,6 +93,7 @@ class player():
         self.source_path = None
         self.source_path = sg.popup_get_file('Select file.','select file.')
         if self.source_path is not None:
+            self.stop()
             print('input file is '+self.source_path)
             self.toggle_play(self.source_path)
         pass
