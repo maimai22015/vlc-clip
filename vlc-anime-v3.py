@@ -1,6 +1,6 @@
 #######################################################################################
-#       VLC-anime ver3.2                                                              #
-#                                                                         2021/07/31  #
+#       VLC-anime ver3.3                                                              #
+#                                                                         2021/08/01  #
 #       Written by Maimai (Twitter:@Maimai22015,@Maimai22016/YTPMV.info)              #
 #       Read https://ytpmv.info/vlc-anime-v3                                          #
 #######################################################################################
@@ -53,7 +53,7 @@ sg.theme('DarkBlue')
 def btn(name):  # a PySimpleGUI "User Defined Element" (see docs)
     return sg.Button(name, size=(8, 1), pad=(1, 1))
 
-layout = [[ sg.Button('load')], #'''sg.T('command: '),sg.Input(default_text='', size=(10, 1), key='-VLC_Control_Command-'),btn('cmd run'),'''
+layout = [[ sg.Button('load'),sg.T('command:'),sg.Input(default_text='atrack 1', size=(10, 1), key='-VLC_Control_Command-'),btn('cmd run'),],
           [btn('stop'),btn('screenshot')],
           [btn('10s <-'),btn('pause'),btn('-> 10s')],
           [btn('normal'),btn('slower'),btn('faster')],
@@ -151,7 +151,7 @@ class player():
             return None
 
     def cmd_run(self,cmd_text):
-        print(self.req(cmd_text))
+        print(self.req(cmd_text,True))
         #self.thrededreq(cmd_text)
         pass
 
@@ -205,7 +205,7 @@ class player():
                         response = response + received
                         if full:
                             b = response.count("\r\n")
-                            if response.count("\r\n") > 1:
+                            if response.count("\r\n") > 60: #とりあえずhelpコマンドで全部表示されるように。重いようなら変更？
                                 sock.close()
                                 break
                         else:
