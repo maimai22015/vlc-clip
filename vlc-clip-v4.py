@@ -1,5 +1,5 @@
 #######################################################################################
-#       VLC-anime ver3.3                                                              #
+#       vlc-clip ver4                                                                 #
 #                                                                         2021/08/01  #
 #       Written by Maimai (Twitter:@Maimai22015,@Maimai22016/YTPMV.info)              #
 #       Read https://ytpmv.info/vlc-anime-v3                                          #
@@ -61,7 +61,7 @@ layout = [[ sg.Button('load'),sg.T('command:'),sg.Input(default_text='atrack 1',
           [sg.Text('Load media to start', key='-MESSAGE_AREA-')],
           [sg.Output(size=(60,10))]]
 
-window = sg.Window('VLC-anime ver.3', layout, element_justification='center', finalize=True, resizable=True,return_keyboard_events=True, use_default_focus=False)
+window = sg.Window('vlc-clip ver.4', layout, element_justification='center', finalize=True, resizable=True,return_keyboard_events=True, use_default_focus=False)
 
 #------------ Media Player Setup ---------#
 
