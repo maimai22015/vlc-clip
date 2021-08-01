@@ -1,4 +1,4 @@
-# vvlc-clip
+# vlc-clip
 <!-- wp:heading -->
 <h2>概要</h2>
 <!-- /wp:heading -->
