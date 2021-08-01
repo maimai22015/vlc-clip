@@ -1,4 +1,4 @@
-# vlc-anime-v3
+# vvlc-clip
 <!-- wp:heading -->
 <h2>概要</h2>
 <!-- /wp:heading -->
@@ -12,7 +12,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>過去にVLC-animeという同名・同目的のスクリプトを開発し、公開していますが、互換性はありません。</p>
+<p>過去にVLC-animeという同目的のスクリプトを開発し、公開していますが、互換性はありません。</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
