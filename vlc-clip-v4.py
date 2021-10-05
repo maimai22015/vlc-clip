@@ -1,8 +1,8 @@
 #######################################################################################
-#       vlc-clip ver4                                                                 #
-#                                                                         2021/08/01  #
+#       vlc-clip ver4.1                                                               #
+#                                                                         2021/10/05  #
 #       Written by Maimai (Twitter:@Maimai22015,@Maimai22016/YTPMV.info)              #
-#       Read https://ytpmv.info/vlc-anime-v3                                          #
+#       Read https://github.com/maimai22015/vlc-clip                                  #
 #######################################################################################
 
 import PySimpleGUI as sg
@@ -53,15 +53,26 @@ sg.theme('DarkBlue')
 def btn(name):  # a PySimpleGUI "User Defined Element" (see docs)
     return sg.Button(name, size=(8, 1), pad=(1, 1))
 
-layout = [[ sg.Button('load'),sg.T('command:'),sg.Input(default_text='atrack 1', size=(10, 1), key='-VLC_Control_Command-'),btn('cmd run'),],
+# Advanced Setting Ui
+SYMBOL_UP = "▼"
+SYMBOL_DN = "▲"
+
+def collapse(layout,key):
+    return sg.pin(sg.Column(layout, key=key,visible=False))
+
+AdvancedUI = [[sg.T('command:'),sg.Input(default_text='atrack 1', size=(10, 1), key='-VLC_Control_Command-'),btn('cmd run')]]
+adv1 = False
+
+layout = [[ sg.Button('load'),sg.T('Disable sub:'),sg.Input(default_text='strack -1', size=(10, 1), key='-Disable_sub-',enable_events=True),btn('RUN')],
           [btn('stop'),btn('screenshot')],
           [btn('10s <-'),btn('pause'),btn('-> 10s')],
           [btn('normal'),btn('slower'),btn('faster')],
           [btn('cut'),sg.Button('Generate .bat and run', size=(17, 1), pad=(1, 1))],
           [sg.Text('Load media to start', key='-MESSAGE_AREA-')],
+          [sg.T(SYMBOL_UP, enable_events=True, k='-OPEN SEC1-', text_color='yellow'), sg.T('Advanced Setting', enable_events=True, text_color='yellow', k='-OPEN SEC1-TEXT')],[collapse(AdvancedUI, '-SEC1-')],
           [sg.Output(size=(60,10))]]
 
-window = sg.Window('vlc-clip ver.4', layout, element_justification='center', finalize=True, resizable=True,return_keyboard_events=True, use_default_focus=False)
+window = sg.Window('vlc-clip ver.4.1', layout, element_justification='center', finalize=True, resizable=True,return_keyboard_events=True, use_default_focus=False)
 
 #------------ Media Player Setup ---------#
 
@@ -75,7 +86,7 @@ class player():
         self.VOL_STEP = 13
         self.current_vol = self.DEFAULT_VOL
         self.source_path=""
-        self.bat_list =[]
+        self.bat_path =""
 
     def toggle_play(self,filepath): #Start playing.
         if not self.is_initiated:
@@ -156,24 +167,26 @@ class player():
         pass
 
     def cut(self):
+        if self.bat_path =="":
+            self.bat_path = self.source_path.rsplit("/",1)[0] + "/vlc-anime-" + datetime.datetime.now().strftime('%Y%m%d-%H-%M-%S')+".bat"
+            print(self.bat_path)
         if self.is_initiated == True and self.source_path !=None:
             out_filename = self.source_path.split("/")[-1]
             out_filename = save_path + out_filename.rsplit(".",1)[0] + "_{:02d}-{:02d}.".format(player.get_time()//60, player.get_time() % 60) + out_filename.rsplit(".",1)[-1]
             print("export to: "+ out_filename)
             bat_cmd = ffmpeg_path + ffmpeg_cmd1 + str(self.get_time()+int(start_pos)) + ffmpeg_cmd2 + str(cut_length) + ffmpeg_cmd3 + self.source_path + ffmpeg_cmd4 + out_filename + ffmpeg_cmd5
+            with open(self.bat_path, mode='a') as f:
+                f.write('\n'+bat_cmd)
             print(bat_cmd)
-            self.bat_list.append(bat_cmd)
+
 
     def run(self):
-        if self.bat_list == []:
+        if self.bat_path =="":
             return
         else:
-            bat_path = self.source_path.rsplit("/",1)[0] + "/vlc-anime-" + datetime.datetime.now().strftime('%Y%m%d-%H-%M-%S')+".bat"
-            print(bat_path)
-            with open(bat_path, mode='a') as f:
-                f.write('\n'.join(self.bat_list))
-            subprocess.Popen(bat_path, creationflags=subprocess.CREATE_NEW_CONSOLE)
-            self.bat_list = []
+            #subprocess.Popen(bat_path, creationflags=subprocess.CREATE_NEW_CONSOLE)
+            print("bat runnninng")
+            self.bat_path =""
 
 
     def _timeinfo(self, msg):
@@ -230,6 +243,10 @@ player=player()
 #------------ The Event Loop ------------#
 while True:
     event, values = window.read(timeout=500)       # run with a timeout so that current location can be updated
+    if event.startswith('-OPEN SEC1-'):
+        adv1 = not adv1
+        window['-OPEN SEC1-'].update(SYMBOL_DN if adv1 else SYMBOL_UP)
+        window['-SEC1-'].update(visible=adv1)
     if event == sg.WIN_CLOSED:
         break
     if event == 'stop' or event ==key_stop:
@@ -255,6 +272,9 @@ while True:
     if event == 'cmd run':
         if values['-VLC_Control_Command-']!='':
             player.cmd_run(values['-VLC_Control_Command-'])
+    if event == 'RUN':
+        if values['-Disable_sub-']!='':
+            player.cmd_run(values['-Disable_sub-'])
     if event =='cut' or event ==key_cut:
         player.cut()
     if event == 'Generate .bat and run' or event ==key_run:
