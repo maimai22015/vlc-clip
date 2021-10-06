@@ -184,7 +184,7 @@ class player():
         if self.bat_path =="":
             return
         else:
-            subprocess.Popen(bat_path, creationflags=subprocess.CREATE_NEW_CONSOLE)
+            subprocess.Popen(self.bat_path, creationflags=subprocess.CREATE_NEW_CONSOLE)
             self.bat_path =""
 
 
