@@ -1,6 +1,6 @@
 #######################################################################################
-#       vlc-clip ver4.1                                                               #
-#                                                                         2021/10/05  #
+#       vlc-clip ver4.2                                                               #
+#                                                                         2023/07/20  #
 #       Written by Maimai (Twitter:@Maimai22015,@Maimai22016/YTPMV.info)              #
 #       Read https://github.com/maimai22015/vlc-clip                                  #
 #######################################################################################
@@ -15,7 +15,7 @@ import configparser
 import os
 #------- Config ------------------------#
 inifile = configparser.ConfigParser()
-inifile.read(os.getcwd() + '/setting.ini', 'UTF-8')
+inifile.read(os.path.join(os.path.dirname(__file__), 'setting.ini'), 'UTF-8')
 print(inifile.get('SETTING', 'save_path'))
 ffmpeg_path = inifile.get('SETTING', 'ffmpeg_path')
 start_pos = inifile.get('SETTING', 'start_pos')
@@ -185,6 +185,7 @@ class player():
             return
         else:
             subprocess.Popen(self.bat_path, creationflags=subprocess.CREATE_NEW_CONSOLE)
+            print("bat runnninng")
             self.bat_path =""
 
 
