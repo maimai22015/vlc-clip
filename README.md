@@ -1,5 +1,10 @@
 # vlc-clip
 <!-- wp:heading -->
+
+## Important Note
+
+This script use PySimpleGUI, but this library has been changed to a paid version. The latest version of the library is not compatible, so please use an older version.
+
 <h2>概要</h2>
 <!-- /wp:heading -->
 
